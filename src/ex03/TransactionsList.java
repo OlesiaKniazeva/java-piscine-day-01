@@ -3,7 +3,7 @@ package ex03;
 import java.util.UUID;
 
 public interface TransactionsList {
-    public void add(Transaction transaction);
-    public void removeById(String id) throws TransactionNotFoundException;
-    public Transaction[] toArray();
+    void add(Transaction transaction);
+    void removeById(UUID id) throws TransactionNotFoundException;
+    Transaction[] toArray();
 }

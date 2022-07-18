@@ -5,6 +5,9 @@ public class User {
     private String name;
     private int balance;
 
+    private TransactionsList transactions;
+
+
     public User(String name, int balance) {
         this.id = UserIdsGenerator.getInstance().generateId();
         this.name = name;
@@ -34,4 +37,9 @@ public class User {
     public void displayInformationAboutUser() {
         System.out.println(this.getName() + ", Balance: " + this.getBalance() + ", ID: " + this.getIdentifier());
     }
+
+    public TransactionsList getTransactions() {
+        return transactions;
+    }
+
 }

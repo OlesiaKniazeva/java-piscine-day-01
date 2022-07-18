@@ -1,11 +1,13 @@
 package ex03;
 
+import java.util.UUID;
+
 class TransactionsLinkedList implements TransactionsList {
     private Node head;
     private Node last;
     private int size;
 
-    private class Node {
+    private static class Node {
         private Transaction value;
         private Node next;
         private Node prev;
@@ -32,7 +34,7 @@ class TransactionsLinkedList implements TransactionsList {
         this.size++;
     }
 
-    public void removeById(String id) throws TransactionNotFoundException {
+    public void removeById(UUID id) throws TransactionNotFoundException {
         Node t;
         Node prev;
         Node next;
@@ -58,7 +60,7 @@ class TransactionsLinkedList implements TransactionsList {
         this.size--;
     }
 
-    private Node findNodeById(String id) {
+    private Node findNodeById(UUID id) {
         Node h;
 
         for (h = head; h != null; h = h.next) {

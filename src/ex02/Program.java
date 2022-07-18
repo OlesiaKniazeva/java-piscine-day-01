@@ -3,19 +3,14 @@ package ex02;
 public class Program {
 
     public static void main(String[] args) {
-        UsersList list;
-        User[] user;
-        int amount;
-        User nikolay;
-        User petr;
-        User masha;
-        User returnUser;
-
         try {
+            User returnUser;
 
-            list = new UsersArrayList();
-            amount = 6000;
-            user = new User[amount];
+            UsersList list = new UsersArrayList();
+
+            int amount = 6000;
+
+            User[] user = new User[amount];
 
             System.out.println("\nAmount of users in array: " + list.numberOfUsers());
             System.out.println();
@@ -25,9 +20,9 @@ public class Program {
                 list.add(user[i]);
             }
 
-            nikolay = new User("Nikolay Sergeev", 67);
-            petr = new User("Petr Okunev", 600);
-            masha = new User("Maria Kazantseva", 59);
+            User nikolay = new User("Nikolay Sergeev", 67);
+            User petr = new User("Petr Okunev", 600);
+            User masha = new User("Maria Kazantseva", 59);
 
             list.add(nikolay);
             list.add(petr);
@@ -45,7 +40,6 @@ public class Program {
             System.out.println("\nAmount of users in array: " + list.numberOfUsers());
 
 //            returnUser = list.getUserByID(6007);
-//            returnUser.displayInformationAboutUser();
 
             System.out.println();
 

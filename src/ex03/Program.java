@@ -4,26 +4,21 @@ public class Program {
 
     public static void main(String[] args) {
         try {
-            TransactionsList transactions;
-            User nikolay;
-            User petr;
-            User masha;
-            Transaction[] arr;
-            Transaction tr1;
-            Transaction tr2;
+            TransactionsList transactions = new TransactionsLinkedList();
 
-            transactions = new TransactionsLinkedList();
-            nikolay = new User("Nikolay Sergeev", 67);
-            petr = new User("Petr Okunev", 600);
-            masha = new User("Maria Kazantseva", 59);
+            User nikolay = new User("Nikolay Sergeev", 67);
+            User petr = new User("Petr Okunev", 600);
+            User masha = new User("Maria Kazantseva", 59);
 
-            tr1 = new Transaction(nikolay, petr, 50);
+            Transaction tr1 = new Transaction(nikolay, petr, 50);
             transactions.add(tr1);
-            tr2 = new Transaction(masha, petr, 54);
+
             transactions.add(new Transaction(petr, masha, 20));
+
+            Transaction tr2 = new Transaction(masha, petr, 54);
             transactions.add(tr2);
 
-            arr = transactions.toArray();
+            Transaction[] arr = transactions.toArray();
 
             for (Transaction tr : arr) {
                 tr.displayInfo();

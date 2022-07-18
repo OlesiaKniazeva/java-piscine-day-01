@@ -24,14 +24,42 @@ public class Transaction {
         this.identifier = UUID.randomUUID();
         this.recipient = recipient;
         this.sender = sender;
-        this.transferAmount = transferAmount > 0 ? transferAmount : -transferAmount;
-        this.transferCategory = transferAmount > 0 ? TransferCategory.DEBITS : TransferCategory.CREDITS;
+        this.transferAmount = transferAmount;
+        this.transferCategory = TransferCategory.CREDITS;
 
         makeTransaction();
+
+        sender.getTransactions().add(new Transaction(identifier, sender, recipient, transferAmount, TransferCategory.CREDITS, this.transferResult));
+        recipient.getTransactions().add(new Transaction(identifier, sender, recipient, transferAmount, TransferCategory.DEBITS, this.transferResult));
     }
 
-    public String getIdentifier() {
-        return identifier.toString();
+    private Transaction(UUID id, User sender, User recipient, int transferAmount, TransferCategory transferCategory, TransferResult transferResult) {
+        this.identifier = id;
+        this.recipient = recipient;
+        this.sender = sender;
+        this.transferCategory = transferCategory;
+        this.transferResult = transferResult;
+        this.transferAmount = transferAmount;
+    }
+
+    public UUID getIdentifier() {
+        return identifier;
+    }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public User getRecipient() {
+        return recipient;
+    }
+
+    public int getTransferAmount() {
+        return transferAmount;
+    }
+
+    public TransferCategory getTransferCategory() {
+        return transferCategory;
     }
 
     public void displayInfo() {
@@ -47,18 +75,13 @@ public class Transaction {
     }
 
     private void makeTransaction() {
-        if (sender.getBalance() < transferAmount) {
-            transferResult = TransferResult.FAILURE;
-        } else {
+        transferResult = TransferResult.FAILURE;
+
+        if (sender.getBalance() > transferAmount) {
             transferResult = TransferResult.SUCCESS;
             sender.setBalance(sender.getBalance() - transferAmount);
             recipient.setBalance(recipient.getBalance() + transferAmount);
         }
-
     }
-
-
-
-
 
 }
