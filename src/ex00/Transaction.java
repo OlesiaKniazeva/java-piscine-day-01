@@ -30,9 +30,27 @@ public class Transaction {
         makeTransaction();
     }
 
-    public String getIdentifier() {
-        return identifier.toString();
+    public UUID getIdentifier() {
+        return identifier;
     }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public User getRecipient() {
+        return recipient;
+    }
+
+    public int getTransferAmount() {
+        return transferAmount;
+    }
+
+    public TransferCategory getTransferCategory() {
+        return transferCategory;
+    }
+
+
 
     public void displayInfo() {
         System.out.println("Transaction ID:" + getIdentifier());
