@@ -3,11 +3,9 @@ package ex01;
 public class Program {
 
     public static void main(String[] args) {
-        int amount;
-        User[] user;
+        int amount = 6000;
 
-        amount = 6000;
-        user = new User[amount];
+        User[] user = new User[amount];
 
         for (int i = 0; i < amount; ++i) {
             user[i] = new User("user" + i, i * 10 + i);
