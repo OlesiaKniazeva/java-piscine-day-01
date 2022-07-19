@@ -1,6 +1,7 @@
 package ex05;
 
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Menu {
     private final TransactionsService service;
@@ -30,17 +31,15 @@ public class Menu {
     }
 
     public void start() {
-        if (!(profile.equals("--profile=dev") || profile.equals("--profile=production"))) {
-            System.out.println("Wrong profile data");
-            return;
-        }
-
         while (true) {
 
             if (profile.equals("dev")) {
                 System.out.println(menuDeveloper);
-            } else {
+            } else if (profile.equals("production")){
                 System.out.println(menuProduction);
+            } else {
+                System.out.println("Profile is wrong. Enter --profile=dev or --profile=production");
+                return;
             }
 
             String codeNum = sc.nextLine();
@@ -52,27 +51,112 @@ public class Menu {
                 case ("2"):
                     viewBalance();
                     break;
-                case("3"):
+                case ("3"):
                     performTransfer();
                     break;
                 case ("4"):
                     viewTransactions();
                     break;
+                case ("5"):
+                    if (profile.equals("dev")) {
+                        removeTransfer();
+                        break;
+                    } else {
+                        finishExecution();
+                    }
+                case ("6"):
+                    if (profile.equals("dev")) {
+                        transferValidity();
+                        break;
+                    }
+                case ("7"):
+                    if (profile.equals("dev")) {
+                        finishExecution();
+                    }
                 default:
-                    System.out.println("End");
+                    System.out.println("Choose from menu items:\n");
             }
             System.out.println("---------------------------------------------------------");
 
         }
     }
 
+    private void transferValidity() {
+        System.out.println("Check results:");
+
+        Transaction[] unpaired = service.checkTransactions();
+        if (unpaired.length == 0) {
+            System.out.println("No unacknowledged transfers");
+        } else {
+            for (Transaction t : unpaired) {
+                System.out.println(t.getRecipient().getName()
+                        + "(id = " + t.getRecipient().getIdentifier() + ") has unacknowledged transfer id = "
+                        + t.getIdentifier() + " from " + t.getSender().getName()
+                        + "(id = " + t.getSender().getIdentifier() + ") for " + t.getTransferAmount());
+            }
+        }
+    }
+    private void removeTransfer() {
+        if (service.isEmpty()) {
+            printNoUsersError();
+            return;
+        }
+
+        while (true) {
+            System.out.println("Enter a user ID and a transfer ID");
+
+            String line = sc.nextLine();
+            String[] data = line.split(" ");
+
+            if (data.length != 2) {
+                System.out.println("Wrong data");
+                continue;
+            }
+
+            try {
+                int id = Integer.parseInt(data[0]);
+                UUID uuid = UUID.fromString(data[1]);
+
+                Transaction tr = service.getUser(id).getTransactions().getById(uuid);
+                service.removeTransaction(id, uuid);
+                System.out.println("Transfer to " + tr.getRecipient().getName() + "(id="
+                        + tr.getRecipient().getIdentifier() + ") " + tr.getTransferAmount()
+                        + " removed");
+                return;
+            } catch (UserNotFoundException e) {
+                System.out.println(e.getMessage());
+                return;
+            } catch (TransactionNotFoundException e) {
+                System.out.println(e.getMessage());
+                return;
+            }
+            catch (NumberFormatException e) {
+                System.out.println("Wrong data");
+                continue;
+            } catch (IllegalArgumentException e) {
+                System.out.println("UUID is wrong");
+                continue;
+            }
+
+        }
+    }
+    private void finishExecution() {
+        System.out.println("Exit from a program");
+        System.exit(0);
+    }
     private void viewTransactions() {
+
+        if (service.isEmpty()) {
+            printNoUsersError();
+            return;
+        }
+
         while (true) {
             System.out.println("Enter a user ID");
             String line = sc.nextLine();
             try {
                 int id = Integer.parseInt(line);
-                Transaction[] arr = service.getTransactions(id);
+                Transaction[] arr = service.getUser(id).getTransactions().toArray();
 
                 if (arr.length == 0) {
                     System.out.println("No transactions were made");
@@ -81,6 +165,7 @@ public class Menu {
                         t.showShortData();
                     }
                 }
+                return;
             } catch (NumberFormatException e) {
                 System.out.println("Wrong data");
                 continue;
@@ -92,7 +177,7 @@ public class Menu {
     }
 
     private void printNoUsersError() {
-        System.out.println("No users added! \n You can add users, by choosing \"1\" in menu");
+        System.out.println("No users added! \nYou can add users, by choosing \"1\" in menu");
     }
     private void performTransfer() {
         int amount;

@@ -75,7 +75,11 @@ public class Transaction {
     }
 
     public void showShortData() {
-        System.out.println("To " + recipient.getName() + "(id=" + recipient.getIdentifier() + " " + -transferAmount + "with id = " + identifier);
+        if (transferCategory == transferCategory.CREDITS) {
+            System.out.println("To " + recipient.getName() + "(id=" + recipient.getIdentifier() + ") " + -transferAmount + " with id = " + identifier);
+        } else {
+            System.out.println("From " + sender.getName() + "(id=" + sender.getIdentifier() + ") " + transferAmount + " with id = " + identifier);
+        }
     }
 
     private void makeTransaction() {
