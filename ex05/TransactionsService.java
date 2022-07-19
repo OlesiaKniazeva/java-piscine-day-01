@@ -1,4 +1,4 @@
-package ex04;
+package ex05;
 
 import java.util.UUID;
 
@@ -11,21 +11,27 @@ public class TransactionsService {
         transactions = new TransactionsLinkedList();
     }
 
-    public void addUser(User client) {
+    public User addUser(User client) {
         data.add(client);
+        return client;
     }
 
-    public void addUser(String name, int balance) {
+    public User addUser(String name, int balance) {
         User newUser = new User(name, balance);
 
         data.add(newUser);
+        return newUser;
     }
 
     public int  getBalance(Integer clientId) throws UserNotFoundException {
         return data.getUserByID(clientId).getBalance();
     }
 
-    public void sendMoney(Integer senderId, Integer recipientId, int moneySum) throws UserNotFoundException {
+    public User getUser(Integer userId)  throws UserNotFoundException {
+        return data.getUserByID(userId);
+    }
+
+    public void sendMoney(Integer senderId, Integer recipientId, int moneySum) throws UserNotFoundException, IllegalTransactionException {
         User sender = data.getUserByID(senderId);
         User recipient = data.getUserByID(recipientId);
 
@@ -56,6 +62,10 @@ public class TransactionsService {
             }
         }
         return unpaired.toArray();
+    }
+
+    public boolean isEmpty() {
+        return data.numberOfUsers() == 0;
     }
 
 }

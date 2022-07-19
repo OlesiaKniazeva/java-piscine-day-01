@@ -59,5 +59,13 @@ public class Program {
             t.displayInfo();
         }
 
+        System.out.println("-----------------");
+
+        try {
+            service.sendMoney(misha.getIdentifier(), katya.getIdentifier(), 567);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }
