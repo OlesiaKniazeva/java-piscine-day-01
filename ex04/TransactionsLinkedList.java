@@ -7,8 +7,8 @@ class TransactionsLinkedList implements TransactionsList {
     private Node last;
     private int size;
 
-    private class Node {
-        private Transaction value;
+    private static class Node {
+        private final Transaction value;
         private Node next;
         private Node prev;
 

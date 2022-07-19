@@ -3,8 +3,8 @@ package ex04;
 import java.util.UUID;
 
 public class TransactionsService {
-    private UsersList data;
-    private TransactionsList transactions;
+    private final UsersList data;
+    private final TransactionsList transactions;
 
     TransactionsService() {
         data = new UsersArrayList();

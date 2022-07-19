@@ -7,22 +7,6 @@ public class Menu {
     private final TransactionsService service;
     private final String profile;
 
-    private final String  menuProduction =
-            "1. Add a user\n" +
-            "2. View user balances\n" +
-            "3. Perform a transfer\n" +
-            "4. View all transactions for a specific user\n" +
-            "5. Finish execution";
-
-    private final String  menuDeveloper =
-            "1. Add a user\n" +
-            "2. View user balances\n" +
-            "3. Perform a transfer\n" +
-            "4. View all transactions for a specific user\n" +
-            "5. DEV – remove a transfer by ID\n" +
-            "6. DEV – check transfer validity\n" +
-            "7. Finish execution";
-
     private final Scanner sc = new Scanner(System.in);
 
     Menu(String profile) {
@@ -34,8 +18,20 @@ public class Menu {
         while (true) {
 
             if (profile.equals("dev")) {
+                String menuDeveloper = "1. Add a user\n" +
+                        "2. View user balances\n" +
+                        "3. Perform a transfer\n" +
+                        "4. View all transactions for a specific user\n" +
+                        "5. DEV – remove a transfer by ID\n" +
+                        "6. DEV – check transfer validity\n" +
+                        "7. Finish execution";
                 System.out.println(menuDeveloper);
             } else if (profile.equals("production")){
+                String menuProduction = "1. Add a user\n" +
+                        "2. View user balances\n" +
+                        "3. Perform a transfer\n" +
+                        "4. View all transactions for a specific user\n" +
+                        "5. Finish execution";
                 System.out.println(menuProduction);
             } else {
                 System.out.println("Profile is wrong. Enter --profile=dev or --profile=production");
@@ -123,19 +119,13 @@ public class Menu {
                         + tr.getRecipient().getIdentifier() + ") " + tr.getTransferAmount()
                         + " removed");
                 return;
-            } catch (UserNotFoundException e) {
+            } catch (UserNotFoundException | TransactionNotFoundException e) {
                 System.out.println(e.getMessage());
                 return;
-            } catch (TransactionNotFoundException e) {
-                System.out.println(e.getMessage());
-                return;
-            }
-            catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Wrong data");
-                continue;
             } catch (IllegalArgumentException e) {
                 System.out.println("UUID is wrong");
-                continue;
             }
 
         }
@@ -168,7 +158,6 @@ public class Menu {
                 return;
             } catch (NumberFormatException e) {
                 System.out.println("Wrong data");
-                continue;
             } catch (UserNotFoundException e) {
                 System.out.println(e.getMessage());
                 return;
@@ -232,7 +221,6 @@ public class Menu {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Wrong data");
-                continue;
             }
         }
         String name = "";
@@ -248,7 +236,7 @@ public class Menu {
 
     private void viewBalance() {
         int id;
-        User user = null;
+        User user;
 
         if (service.isEmpty()) {
             printNoUsersError();
@@ -266,7 +254,6 @@ public class Menu {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Wrong data");
-                continue;
             } catch (UserNotFoundException e) {
                 System.out.println(e.getMessage());
                 return;

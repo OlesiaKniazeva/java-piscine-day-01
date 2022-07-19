@@ -15,7 +15,7 @@ public class UserIdsGenerator {
             instance = new UserIdsGenerator();
         }
         return instance;
-    };
+    }
 
     public Integer generateId() {
          return lastId++;

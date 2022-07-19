@@ -20,10 +20,10 @@ class UsersArrayList implements UsersList {
             if (size > max_size - 1) {
                 User[] new_users;
 
-                max_size = (int)(max_size * 1.5) + 1;
+                max_size = (int) (max_size * 1.5) + 1;
                 new_users = new User[max_size];
-                for (int i = 0; i < size; ++i) {
-                    new_users[i] = users[i];
+                if (size >= 0) {
+                    System.arraycopy(users, 0, new_users, 0, size);
                 }
                 users = new_users;
             }

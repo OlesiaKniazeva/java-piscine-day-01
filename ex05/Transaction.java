@@ -75,7 +75,7 @@ public class Transaction {
     }
 
     public void showShortData() {
-        if (transferCategory == transferCategory.CREDITS) {
+        if (transferCategory == TransferCategory.CREDITS) {
             System.out.println("To " + recipient.getName() + "(id=" + recipient.getIdentifier() + ") " + -transferAmount + " with id = " + identifier);
         } else {
             System.out.println("From " + sender.getName() + "(id=" + sender.getIdentifier() + ") " + transferAmount + " with id = " + identifier);
