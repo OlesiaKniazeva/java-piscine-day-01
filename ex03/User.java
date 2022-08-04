@@ -12,6 +12,7 @@ public class User {
         this.id = UserIdsGenerator.getInstance().generateId();
         this.name = name;
         this.balance = (balance > 0) ? balance : 0;
+        this.transactions = new TransactionsLinkedList();
     }
 
     public int getBalance() {
