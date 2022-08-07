@@ -5,4 +5,4 @@
 Learn how to model the operation of various collections
 correctly, and create a full-scale money transfer application
 
-Tasks description: [SubjectDay01.pdf](Subject-Day01.pdf)
+Tasks description: [Subject-Day01.pdf](Subject-Day01.pdf)
